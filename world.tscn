@@ -68,6 +68,12 @@ metadata/_edit_group_ = true
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
+[node name="background" type="Sprite2D" parent="."]
+modulate = Color(0.298039, 0.741176, 0.776471, 1)
+z_index = -5
+scale = Vector2(40000, 200)
+texture = ExtResource("2_qaboh")
+
 [connection signal="area_entered" from="PlayerNode/Player/detect" to="PlayerNode/Player" method="_on_detect_area_entered"]
 [connection signal="body_entered" from="PlayerNode/Player/detect" to="PlayerNode/Player" method="_on_detect_body_entered"]
 [connection signal="body_entered" from="PlayerNode/Player/resetter" to="PlayerNode/Player" method="_on_resetter_body_entered"]
