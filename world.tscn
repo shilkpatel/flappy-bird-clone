@@ -1,0 +1,73 @@
+[gd_scene load_steps=7 format=3 uid="uid://b07ga8v3q51wi"]
+
+[ext_resource type="Script" path="res://player_node.gd" id="1_40qv1"]
+[ext_resource type="Texture2D" uid="uid://d08tdlvqbjekd" path="res://player.png" id="2_qaboh"]
+[ext_resource type="PackedScene" uid="uid://bx6hvcqrg5ubb" path="res://wall_node.tscn" id="3_8uakh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vmrx8"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_t1uv6"]
+size = Vector2(17, 17)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_72w8q"]
+size = Vector2(45.25, 544)
+
+[node name="world" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+offset_left = -40.0
+offset_top = -304.0
+offset_right = 40.0
+offset_bottom = -216.0
+
+[node name="PlayerNode" type="Node2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="PlayerNode"]
+script = ExtResource("1_40qv1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player"]
+shape = SubResource("RectangleShape2D_vmrx8")
+
+[node name="Sprite2D" type="Sprite2D" parent="PlayerNode/Player"]
+texture = ExtResource("2_qaboh")
+
+[node name="detect" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/detect"]
+shape = SubResource("RectangleShape2D_t1uv6")
+
+[node name="resetter" type="Area2D" parent="PlayerNode/Player"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerNode/Player/resetter"]
+position = Vector2(-608, 0)
+shape = SubResource("RectangleShape2D_72w8q")
+
+[node name="WallNode" parent="." instance=ExtResource("3_8uakh")]
+position = Vector2(592, -16)
+metadata/_edit_group_ = true
+
+[node name="WallNode5" parent="." instance=ExtResource("3_8uakh")]
+position = Vector2(1104, 0)
+metadata/_edit_group_ = true
+
+[node name="WallNode2" parent="." instance=ExtResource("3_8uakh")]
+position = Vector2(720, 8)
+metadata/_edit_group_ = true
+
+[node name="WallNode3" parent="." instance=ExtResource("3_8uakh")]
+position = Vector2(848, -24)
+metadata/_edit_group_ = true
+
+[node name="WallNode4" parent="." instance=ExtResource("3_8uakh")]
+position = Vector2(976, 24)
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="area_entered" from="PlayerNode/Player/detect" to="PlayerNode/Player" method="_on_detect_area_entered"]
+[connection signal="body_entered" from="PlayerNode/Player/detect" to="PlayerNode/Player" method="_on_detect_body_entered"]
+[connection signal="body_entered" from="PlayerNode/Player/resetter" to="PlayerNode/Player" method="_on_resetter_body_entered"]
